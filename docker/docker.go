@@ -37,6 +37,8 @@ func StartDocker() error {
 				return fmt.Errorf("could not start Docker Desktop: %w", err)
 			}
 		}
+		time.Sleep(30*time.Second)
+
 	}
 
 	ready, err := isDockerReady()
