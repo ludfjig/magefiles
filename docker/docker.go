@@ -37,6 +37,7 @@ func StartDocker() error {
 				return fmt.Errorf("could not start Docker Desktop: %w", err)
 			}
 		}
+		fmt.Println("Sleeping...")
 		time.Sleep(30*time.Second)
 
 	}
