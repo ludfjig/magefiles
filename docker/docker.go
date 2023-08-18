@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -26,22 +25,6 @@ const (
 
 // Ensure the docker daemon is started and ready to accept connections.
 func StartDocker() error {
-	switch runtime.GOOS {
-	case "windows":
-		err := shx.RunS("powershell", "-c", "Get-Process 'Docker Desktop'")
-		if err != nil {
-			fmt.Println("Starting Docker Desktop")
-			cmd := shx.Command(`C:\Program Files\Docker\Docker\Docker Desktop.exe`)
-			err := cmd.Cmd.Start()
-			if err != nil {
-				return fmt.Errorf("could not start Docker Desktop: %w", err)
-			}
-		}
-		fmt.Println("Sleeping...")
-		time.Sleep(30*time.Second)
-
-	}
-
 	ready, err := isDockerReady()
 	if err != nil {
 		return err
