@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -69,6 +70,9 @@ func EnsurePorterNetwork() error {
 		return nil
 	}
 
+	if runtime.GOOS == "windows" {
+		return shx.RunE("docker", "network", "create", "-d=nat", DefaultNetworkName)
+	}
 	return shx.RunE("docker", "network", "create", DefaultNetworkName, "-d=bridge")
 }
 
